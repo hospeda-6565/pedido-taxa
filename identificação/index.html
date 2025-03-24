@@ -304,8 +304,8 @@ async function carregarDados() {
         document.getElementById("nome").innerText = cliente.nome;
         document.getElementById("cpf-formatado").innerText = cliente.cpf;
 
-        // Preenchendo os campos do endereço individualmente
-        if (cliente.endereco && typeof cliente.endereco === "object") {
+          // Verificando e preenchendo o endereço
+          if (cliente.endereco && typeof cliente.endereco === "object") {
             document.getElementById("endereco").innerText = cliente.endereco.logradouro || "";
             document.getElementById("numero").innerText = cliente.endereco.numero || "";
             document.getElementById("complemento").innerText = cliente.endereco.complemento || "";
@@ -314,11 +314,8 @@ async function carregarDados() {
             document.getElementById("estado").innerText = cliente.endereco.estado || "";
             document.getElementById("cep").innerText = cliente.endereco.cep || "";
         } else {
-            console.error("Endereço não encontrado para o cliente.");
+            document.getElementById("endereco").innerText = "Endereço não disponível";
         }
-    } catch (error) {
-        console.error("Erro ao carregar os dados:", error);
-    }
 }
 
 window.onload = carregarDados;
