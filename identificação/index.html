@@ -296,99 +296,64 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
-    async function carregarDados() {
-        try {
-            document.getElementById('loading').style.display = 'block';
+    function mostrarDadosCliente() {
+        document.getElementById('loading').style.display = 'block';
     
-            const response = await fetch('clientes.json'); 
-            const clientes = await response.json();
+        const cliente = JSON.parse(localStorage.getItem('cliente'));
     
-            if (!clientes || clientes.length === 0) {
-                console.error("Nenhum cliente encontrado no JSON.");
-                return;
-            }
-    
-            const cliente = clientes[0]; 
-    
-            // Verifica se o elemento existe antes de alterar o texto
-            function atualizarCampo(id, valor) {
-                const elemento = document.getElementById(id);
-                if (elemento) {
-                    elemento.innerText = valor || "Não informado";
-                }
-            }
-    
-            atualizarCampo("nome", cliente.nome);
-            atualizarCampo("cpf-formatado", cliente.cpf);
-            atualizarCampo("endereco", cliente.endereco?.logradouro);
-            atualizarCampo("numero", cliente.endereco?.numero);
-            atualizarCampo("complemento", cliente.endereco?.complemento);
-            atualizarCampo("bairro", cliente.endereco?.bairro);
-            atualizarCampo("cidade", cliente.endereco?.cidade);
-            atualizarCampo("estado", cliente.endereco?.estado);
-            atualizarCampo("cep", cliente.endereco?.cep);
-    
-            document.getElementById('loading').style.display = 'none';
-        } catch (error) {
-            console.error("Erro ao carregar os dados:", error);
-            document.getElementById('loading').style.display = 'none';
+        if (!cliente) {
+            alert("Nenhum dado encontrado. Retornando à página inicial.");
+            window.location.href = "index.html";
+            return;
         }
+    
+        function atualizarCampo(id, valor) {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                elemento.innerText = valor || "Não informado";
+            }
+        }
+    
+        atualizarCampo("nome", cliente.nome);
+        atualizarCampo("cpf-formatado", cliente.cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'));
+        atualizarCampo("endereco", cliente.endereco);
+        atualizarCampo("numero", cliente.numero);
+        atualizarCampo("complemento", cliente.complemento);
+        atualizarCampo("bairro", cliente.bairro);
+        atualizarCampo("cidade", cliente.cidade);
+        atualizarCampo("estado", cliente.estado);
+        atualizarCampo("cep", cliente.cep);
+    
+        document.getElementById('loading').style.display = 'none';
     }
     
-    window.onload = carregarDados;
+    window.onload = mostrarDadosCliente;
     
     document.getElementById('btn-sim').addEventListener('click', function() {
-        window.location.href = "../encomenda/index.html"; 
+        window.location.href = "../encomenda/index.html";
+    });
+    
+    document.getElementById('btn-nao').addEventListener('click', function() {
+        localStorage.removeItem('cliente');
+        window.location.href = "../index.html";
     });
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-  function mostrarDadosCliente() {
-      // Exibe o elemento de carregamento
-      document.getElementById('loading').style.display = 'block';
-
-      const cliente = JSON.parse(localStorage.getItem('cliente')); // Recupera os dados do cliente
-
-      if (!cliente) {
-          alert("Nenhum dado encontrado. Retornando à página inicial.");
-          window.location.href = "index.html"; // Volta para a Página 1
-          return;
-      }
-
-      // Exibe os dados do cliente
-      document.getElementById("nome").innerText = cliente.nome;
-      document.getElementById("cpf-formatado").innerText = cliente.cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Formata o CPF
-      document.getElementById("endereco").innerText = cliente.endereco;
-
-      // Oculta o elemento de carregamento
-      document.getElementById('loading').style.display = 'none';
-  }
-
-  document.getElementById('btn-sim').addEventListener('click', function() {
-      window.location.href = "../encomenda/index.html"; // Redireciona para a Página 3
-  });
-
-  document.getElementById('btn-nao').addEventListener('click', function() {
-      localStorage.removeItem('cliente'); // Remove os dados do cliente
-      window.location.href = "../index.html"; // Volta para a Página 1
-  });
-
-  // Executa a função quando a página é carregada
-  window.onload = mostrarDadosCliente;
-</script>
+    
 
 
     <script>
