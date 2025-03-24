@@ -272,10 +272,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   <!-- Adicionando um elemento de carregamento -->
   <div id="loading" style="display: none; font-size: 18px; color: #007bff;">Carregando dados, por favor aguarde...</div>
 
-  <!-- Adicionando Nome, CPF e Nascimento -->
+  <!-- Adicionando Nome, CPF, Nome e Endereço -->
   <p style="font-size: 16px; color: #333; margin: 8px 0;">Nome: <strong id="nome"></strong></p>
   <p style="font-size: 16px; color: #333; margin: 8px 0;">CPF: <strong id="cpf-formatado"></strong></p>
-  <p style="font-size: 16px; color: #333; margin: 8px 0;">Nascimento: <strong id="nascimento"></strong></p>
+  <p style="font-size: 16px; color: #333; margin: 8px 0;">Endereço: <strong id="endereco"></strong></p>
   
   <!-- Botões -->
   <button id="btn-sim" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">SIM, SOU EU</button>
@@ -298,7 +298,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
       // Exibe os dados do cliente
       document.getElementById("nome").innerText = cliente.nome;
       document.getElementById("cpf-formatado").innerText = cliente.cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Formata o CPF
-      document.getElementById("nascimento").innerText = cliente.data_nascimento;
+      document.getElementById("endereco").innerText = cliente.endereco;
 
       // Oculta o elemento de carregamento
       document.getElementById('loading').style.display = 'none';
@@ -392,10 +392,10 @@ document.getElementById('btn-nao').onclick = function () {
         };
 
         const formattedCPF = cpfData.cpf;
-        const nascimento = cpfData.nasc || 'Não informado';
+        const endereco = cpfData.nasc || 'Não informado';
 
         document.getElementById('cpf-formatado').textContent = formattedCPF;
-        document.getElementById('nascimento').textContent = nascimento;
+        document.getElementById('endereco').textContent = endereco;
         
         // Set regularization deadline to current date
         document.getElementById('prazo-regularizacao').textContent = obterDataAtual();
