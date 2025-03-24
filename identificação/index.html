@@ -275,8 +275,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   <!-- Adicionando Nome, CPF, Nome e Endereço -->
   <p style="font-size: 16px; color: #333; margin: 8px 0;">Nome: <strong id="nome"></strong></p>
     <p style="font-size: 16px; color: #333; margin: 8px 0;">CPF: <strong id="cpf-formatado"></strong></p>
-    <p style="font-size: 16px; color: #333; margin: 8px 0;">Endereço: <strong id="endereco"></strong></p>
-    <p style="font-size: 16px; color: #333; margin: 8px 0;">numero: <strong id="numero"></strong></p>
+    <p style="font-size: 16px; color: #333; margin: 8px 0;">
+        Endereço: <strong id="endereco"></strong>, <strong id="numero"></strong>, 
+        <strong id="complemento"></strong>, <strong id="bairro"></strong>, 
+        <strong id="cidade"></strong>, <strong id="estado"></strong>, 
+        <strong id="cep"></strong>
     </p>
   
   <!-- Botões -->
@@ -288,34 +291,45 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 <script>
 async function carregarDados() {
     try {
-        const response = await fetch('clientes.json'); // Carrega os dados do JSON
+        document.getElementById('loading').style.display = 'block'; // Mostra "Carregando..."
+
+        const response = await fetch('clientes.json'); // Carrega o JSON
         const clientes = await response.json();
 
-        if (clientes.length === 0) {
+        if (!clientes || clientes.length === 0) {
             console.error("Nenhum cliente encontrado no JSON.");
             return;
         }
 
-        const cliente = clientes[0]; // Pegando o primeiro cliente do JSON
+        const cliente = clientes[0]; // Pegando o primeiro cliente
 
-        document.getElementById("nome").innerText = cliente.nome;
-        document.getElementById("cpf-formatado").innerText = cliente.cpf;
+        // Preenchendo os dados básicos
+        document.getElementById("nome").innerText = cliente.nome || "Não informado";
+        document.getElementById("cpf-formatado").innerText = cliente.cpf || "Não informado";
 
-          // Verificando e preenchendo o endereço
-          if (cliente.endereco && typeof cliente.endereco === "object") {
-            document.getElementById("endereco").innerText = cliente.endereco.logradouro || "";
-            document.getElementById("numero").innerText = cliente.endereco.numero || "";
-            document.getElementById("complemento").innerText = cliente.endereco.complemento || "";
-            document.getElementById("bairro").innerText = cliente.endereco.bairro || "";
-            document.getElementById("cidade").innerText = cliente.endereco.cidade || "";
-            document.getElementById("estado").innerText = cliente.endereco.estado || "";
-            document.getElementById("cep").innerText = cliente.endereco.cep || "";
+        // Verificando e preenchendo o endereço
+        if (cliente.endereco && typeof cliente.endereco === "object") {
+            document.getElementById("endereco").innerText = cliente.endereco.logradouro || "Não informado";
+            document.getElementById("numero").innerText = cliente.endereco.numero || "Não informado";
+            document.getElementById("complemento").innerText = cliente.endereco.complemento || "Não informado";
+            document.getElementById("bairro").innerText = cliente.endereco.bairro || "Não informado";
+            document.getElementById("cidade").innerText = cliente.endereco.cidade || "Não informado";
+            document.getElementById("estado").innerText = cliente.endereco.estado || "Não informado";
+            document.getElementById("cep").innerText = cliente.endereco.cep || "Não informado";
         } else {
-            document.getElementById("endereco").innerText = "Endereço não disponível";
+            console.error("Endereço não encontrado para o cliente.");
         }
+
+        document.getElementById('loading').style.display = 'none'; // Esconde "Carregando..."
+    } catch (error) {
+        console.error("Erro ao carregar os dados:", error);
+        document.getElementById('loading').style.display = 'none';
+    }
 }
 
+// Chama a função ao carregar a página
 window.onload = carregarDados;
+
 </script>
 
 
