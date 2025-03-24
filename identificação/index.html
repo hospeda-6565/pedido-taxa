@@ -327,48 +327,6 @@ window.onload = carregarDados;
 
 
 
-<script>
-async function carregarDados() {
-    try {
-        const response = await fetch('clientes.json');
-        const clientes = await response.json();
-
-        if (clientes.length === 0) {
-            console.error("Nenhum cliente encontrado no JSON.");
-            return;
-        }
-
-        // Pegando o primeiro cliente
-        const cliente = clientes[0];
-
-        document.getElementById("nome").innerText = cliente.nome;
-        document.getElementById("cpf-formatado").innerText = cliente.cpf;
-
-        // Verificando se o objeto "endereco" existe e estruturando corretamente
-        if (cliente.endereco && typeof cliente.endereco === "object") {
-            const enderecoCompleto = [
-                cliente.endereco.logradouro || "",  // Rua/Avenida
-                cliente.endereco.numero || "",      // Número
-                cliente.endereco.complemento || "", // Complemento
-                cliente.endereco.bairro || "",      // Bairro
-                cliente.endereco.cidade || "",      // Cidade
-                cliente.endereco.estado || "",      // Estado
-                cliente.endereco.cep || ""          // CEP
-            ].filter(e => e).join(", "); // Remove valores vazios e junta com ", "
-
-            document.getElementById("endereco").innerText = enderecoCompleto;
-        } else {
-            document.getElementById("endereco").innerText = "Endereço não disponível";
-        }
-    } catch (error) {
-        console.error("Erro ao carregar os dados:", error);
-    }
-}
-
-window.onload = carregarDados;
-
-</script>
-
 
 
 
