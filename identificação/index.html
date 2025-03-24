@@ -355,6 +355,7 @@ window.onload = carregarDados;
       document.getElementById("nome").innerText = cliente.nome;
       document.getElementById("cpf-formatado").innerText = cliente.cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Formata o CPF
       document.getElementById("endereco").innerText = cliente.endereco;
+      document.getElementById("numero").innerText = cliente.numero;
 
       // Oculta o elemento de carregamento
       document.getElementById('loading').style.display = 'none';
