@@ -277,33 +277,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   <p style="font-size: 16px; color: #333; margin: 8px 0;">CPF: <strong id="cpf-formatado"></strong></p>
   <p style="font-size: 16px; color: #333; margin: 8px 0;">Endereço: <strong id="endereco"></strong></p>
   
-  <script>
-    async function carregarDados() {
-        try {
-            const response = await fetch('clientes.json');
-            const clientes = await response.json();
-
-            // Pegando o primeiro cliente (altere o índice se necessário)
-            const cliente = clientes[0];
-
-            document.getElementById("nome").innerText = cliente.nome;
-            document.getElementById("cpf-formatado").innerText = cliente.cpf;
-
-            // Garantindo que o endereço não seja um objeto, mas sim uma string formatada
-            if (cliente.endereco && typeof cliente.endereco === "object") {
-                document.getElementById("endereco").innerText = 
-                    `${cliente.endereco.logradouro}, ${cliente.endereco.numero}, ${cliente.endereco.complemento} - ` +
-                    `${cliente.endereco.bairro}, ${cliente.endereco.cidade} - ${cliente.endereco.estado}, ${cliente.endereco.cep}`;
-            } else {
-                document.getElementById("endereco").innerText = "Endereço não disponível";
-            }
-        } catch (error) {
-            console.error("Erro ao carregar os dados:", error);
-        }
-    }
-
-    window.onload = carregarDados;
-</script>
+  
 
   
   <!-- Botões -->
