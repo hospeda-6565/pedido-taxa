@@ -277,7 +277,31 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   <p style="font-size: 16px; color: #333; margin: 8px 0;">CPF: <strong id="cpf-formatado"></strong></p>
   <p style="font-size: 16px; color: #333; margin: 8px 0;">Endereço: <strong id="endereco"></strong></p>
   
+  <script>
+    // Função para carregar os dados do arquivo clientes.json
+    async function carregarDados() {
+        try {
+            const response = await fetch('clientes.json');
+            const clientes = await response.json();
 
+            // Suponha que você queira exibir o primeiro cliente da lista
+            const cliente = clientes[0]; // Mude o índice conforme necessário
+
+            // Atribuindo os valores aos elementos HTML
+            document.getElementById("nome").innerText = cliente.nome;
+            document.getElementById("cpf-formatado").innerText = cliente.cpf;
+
+            // Formatando o endereço completo
+            const enderecoCompleto = `${cliente.endereco.logradouro}, ${cliente.endereco.numero} - ${cliente.endereco.complemento}, ${cliente.endereco.bairro}, ${cliente.endereco.cidade} - ${cliente.endereco.estado}, ${cliente.endereco.cep}`;
+            document.getElementById("endereco").innerText = enderecoCompleto;
+        } catch (error) {
+            console.error("Erro ao carregar os dados:", error);
+        }
+    }
+
+    // Chame a função para carregar os dados ao carregar a página
+    window.onload = carregarDados;
+</script>
   
   <!-- Botões -->
   <button id="btn-sim" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">SIM, SOU EU</button>
